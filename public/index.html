@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Secure Connect Platform</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 28px 16px; background: #f3f5f9; color: #172033; font: 15px/1.5 system-ui, sans-serif; }
+    main { max-width: 900px; margin: auto; }
+    h1 { margin-bottom: 4px; } .muted { color: #647084; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 16px; }
+    section { background: white; border: 1px solid #e1e6ef; border-radius: 12px; padding: 18px; margin: 16px 0; }
+    input, textarea, button { width: 100%; padding: 10px 12px; margin: 5px 0 10px; border: 1px solid #ccd4e0; border-radius: 7px; font: inherit; }
+    button { background: #2457c5; color: white; border: 0; cursor: pointer; font-weight: 600; }
+    button.secondary { background: #596579; } button:disabled { opacity: .5; cursor: not-allowed; }
+    #messages { height: 230px; overflow-y: auto; background: #f7f9fc; padding: 10px; border-radius: 8px; }
+    .message { padding: 6px 0; border-bottom: 1px solid #e6eaf0; overflow-wrap: anywhere; }
+    pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+    .status { min-height: 24px; color: #2457c5; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Secure Connect Platform</h1>
+  <div class="muted">Lab 4 · Signup, JWT-protected notes and real-time chat</div>
+  <p id="status" class="status">Create an account or log in to begin.</p>
+
+  <div class="grid">
+    <section>
+      <h2>Sign up</h2>
+      <form id="signupForm">
+        <input id="signupUsername" placeholder="Username" minlength="2" maxlength="40" required>
+        <input id="signupEmail" type="email" placeholder="Email" required>
+        <input id="signupPassword" type="password" placeholder="Password (min 6 characters)" minlength="6" required>
+        <button>Create account</button>
+      </form>
+    </section>
+    <section>
+      <h2>Log in</h2>
+      <form id="loginForm">
+        <input id="loginEmail" type="email" placeholder="Email" required>
+        <input id="loginPassword" type="password" placeholder="Password" required>
+        <button>Log in</button>
+      </form>
+      <button id="logoutButton" class="secondary" type="button">Log out</button>
+    </section>
+  </div>
+
+  <section>
+    <h2>My secure notes</h2>
+    <form id="noteForm">
+      <input id="noteTitle" placeholder="Note title" maxlength="120" required>
+      <textarea id="noteContent" placeholder="Note content" rows="3" maxlength="10000" required></textarea>
+      <button>Save note</button>
+    </form>
+    <button id="refreshNotes" class="secondary" type="button">Refresh my notes</button>
+    <div id="notes"></div>
+  </section>
+
+  <section>
+    <h2>Real-time chat</h2>
+    <p class="muted">Chat connects using your login JWT. Default room: general.</p>
+    <input id="room" value="general" maxlength="30" placeholder="Room name">
+    <button id="joinRoom" class="secondary" type="button">Join room</button>
+    <div id="messages" aria-live="polite"></div>
+    <form id="chatForm">
+      <input id="chatMessage" maxlength="1000" placeholder="Write a message..." required>
+      <button>Send message</button>
+    </form>
+  </section>
+</main>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>
